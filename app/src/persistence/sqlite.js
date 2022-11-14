@@ -91,7 +91,6 @@ async function getItem(id) {
     db.all('SELECT * FROM todo_items WHERE id=?', [id], (err, rows) => {
       if (err) return rej(err);
       acc(
-        console.log(rows),
         rows.map(item =>
           Object.assign({}, item, {
             make: item.make,
