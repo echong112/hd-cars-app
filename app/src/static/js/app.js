@@ -117,9 +117,7 @@ function TodoListCard() {
     <Container>
     <Row>
       <Col>
-        <AddItemForm onNewItem={onNewItem} />
-      </Col>
-      <Col>
+      <h2>All Cars</h2>
       {items.length === 0 && (
         <p className="text-center">No items yet! Add one above!</p>
       )}
@@ -130,6 +128,10 @@ function TodoListCard() {
           onItemRemoval={onItemRemoval}
         />
       ))}
+      </Col>
+      <Col>
+        <h2>Add Car</h2>
+        <AddItemForm onNewItem={onNewItem} />
       </Col>
     </Row>
     </Container>
@@ -294,7 +296,7 @@ function ItemDisplay({ item, onItemRemoval }) {
   const { Container, Row, Col, Button } = ReactBootstrap;
 
   const removeItem = async () => {
-    await fetch(`/cars/${item.id}`, { method: 'DELETE' });
+    await deleteFromDb(item);
     onItemRemoval(item);
   };
 
@@ -318,6 +320,8 @@ function ItemDisplay({ item, onItemRemoval }) {
     </Container>
   );
 }
+
+// 4. Functions
 
 async function getAllCars() {
   let json;
@@ -343,4 +347,10 @@ async function addToDb(item) {
   })
   return res;
 }
+
+async function deleteFromDb(item) {
+  await fetch(`/cars/${item.id}`, { method: 'DELETE' });
+  return item
+}
+
 ReactDOM.render(<App />, document.getElementById('root'));
