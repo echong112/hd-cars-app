@@ -87,8 +87,14 @@ function App() {
 function TodoListCard() {
   const { Container, Row, Col } = ReactBootstrap;
   const [items, setItems] = React.useState(null);
+  const [logs, setLogs] = React.useState([]);
 
   React.useEffect(() => {
+    async function callingAllLogs() {
+      const res = await getAllLogs();
+      setLogs(res);
+    }
+
     async function callingAllCars() {
       let allCars = await getAllCars();
       if (allCars.length === 0) {
@@ -99,6 +105,7 @@ function TodoListCard() {
       }
       setItems(allCars);
     }
+    callingAllLogs();
     callingAllCars();
   }, []);
 
@@ -140,6 +147,14 @@ function TodoListCard() {
         <AddItemForm onNewItem={onNewItem} />
       </Col>
     </Row>
+    <Container>
+      <p>Logs</p>
+      {logs && logs.map((log) => {
+        return (
+          <p>henry</p>
+        )
+      })}
+    </Container>
     </Container>
   );
 }
@@ -362,6 +377,13 @@ async function addToDb(item) {
 async function deleteFromDb(item) {
   await fetch(`/cars/${item.id}`, { method: 'DELETE' });
   return item
+}
+
+async function getAllLogs() {
+  let json;
+  const res = await fetch('/logs');
+  json = res ? await res.json() : [];
+  return json;
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

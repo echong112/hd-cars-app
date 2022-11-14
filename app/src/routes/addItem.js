@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     id: uuid(),
     make: req.body.make,
     model: req.body.model,
-    package: req.body.package,
+    carPackage: req.body.carPackage,
     color: req.body.color,
     year: req.body.year,
     category: req.body.category,

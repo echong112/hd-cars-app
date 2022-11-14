@@ -5,6 +5,7 @@ const getItems = require('./routes/getItems');
 const addItem = require('./routes/addItem');
 const updateItem = require('./routes/updateItem');
 const deleteItem = require('./routes/deleteItem');
+const getLogs = require('./routes/getLogs');
 
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
@@ -14,12 +15,16 @@ app.post('/cars', addItem);
 app.put('/cars/:id', updateItem);
 app.delete('/cars/:id', deleteItem);
 
+app.get('/logs', getLogs);
+
 db.init().then(() => {
     app.listen(3000, () => console.log('Listening on port 3000'));
 }).catch((err) => {
     console.error(err);
     process.exit(1);
 });
+
+db.initLogs();
 
 const gracefulShutdown = () => {
     db.teardown()
