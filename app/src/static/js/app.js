@@ -22,7 +22,6 @@ const Colors = {
   White: 'White',
   Yellow: 'Yellow'
 };
-// Enums would have been better here
 const Category = {
   CargoVan: 'Cargo Van',
   Convertible: 'Convertible',
@@ -35,6 +34,49 @@ const Category = {
   Sedan: 'Sedan',
   Wagon: 'Wagon',
 };
+
+const starterCars = [
+  {
+    make: 'Ford',
+    model: 'F150',
+    carPackage: 'Base',
+    color: 'Silver',
+    year: 2010,
+    category: 'Pickup Truck',
+    mileage: 120123,
+    price: 1999900,
+  },
+  {
+    make: 'Toyota',
+    model: 'Camry',
+    carPackage: 'SE',
+    color: 'White',
+    year: 2018,
+    category: 'Sedan',
+    mileage: 3999,
+    price: 2899000,
+  },
+  {
+    make: 'Toyota',
+    model: 'RAV4',
+    carPackage: 'XSE',
+    color: 'Red',
+    year: 2018,
+    category: 'SUV',
+    mileage: 24001,
+    price: 2275000,
+  },
+  {
+    make: 'Ford',
+    model: 'Bronco',
+    carPackage: 'Badlands',
+    color: 'Orange',
+    year: 2022,
+    category: 'SUV',
+    mileage: 1,
+    price: 4499000,
+  }
+];
 
 // 2. App container
 function App() {
@@ -50,31 +92,46 @@ function App() {
   );
 }
 
+async function getAllCars() {
+  let json;
+  const res = await fetch('/cars');
+  json = res ? await res.json() : [];
+  return json;
+}
+
+async function addToDb(item) {
+  const res = await fetch('/cars', {
+    method: 'POST',
+    body: JSON.stringify({
+      make: item.make,
+      model: item.model,
+      carPackage: item.carPackage,
+      color: item.color,
+      year: item.year,
+      category: item.category,
+      mileage: item.mileage,
+      price: item.price,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  return res;
+}
+
 // 3. List of Cars
 function TodoListCard() {
   const [items, setItems] = React.useState(null);
 
   React.useEffect(() => {
-    fetch('/cars')
-      .then(r => r.json())
-      .then(setItems);
+    async function callingAllCars() {
+      const allCars = await getAllCars();
+      setItems(allCars);
+    }
+    callingAllCars();
   }, []);
 
   const onNewItem = React.useCallback(
     newItem => {
       setItems([...items, newItem]);
-    },
-    [items],
-  );
-
-  const onItemUpdate = React.useCallback(
-    item => {
-      const index = items.findIndex(i => i.id === item.id);
-      setItems([
-        ...items.slice(0, index),
-        item,
-        ...items.slice(index + 1),
-      ]);
     },
     [items],
   );
@@ -99,7 +156,6 @@ function TodoListCard() {
         <ItemDisplay
           item={item}
           key={item.id}
-          onItemUpdate={onItemUpdate}
           onItemRemoval={onItemRemoval}
         />
       ))}
@@ -120,28 +176,25 @@ function AddItemForm({ onNewItem }) {
   const [price, setPrice] = React.useState(2000000);
   const [submitting, setSubmitting] = React.useState(false);
 
-  const submitNewItem = e => {
+  const submitNewItem = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    fetch('/cars', {
-      method: 'POST',
-      body: JSON.stringify({
-        make: make,
-        model: model,
-        carPackage: carPackage,
-        color: color,
-        year: year,
-        category: category,
-        mileage: mileage,
-        price: price,
-      }),
-      headers: { 'Content-Type': 'application/json' },
+
+    const res = await addToDb({
+      make: make,
+      model: model,
+      carPackage: carPackage,
+      color: color,
+      year: year,
+      category: category,
+      mileage: mileage,
+      price: price,
     })
-      .then(r => r.json())
-      .then(item => {
-        onNewItem(item);
-        setSubmitting(false);
-      });
+
+    const item = await res.json();
+    onNewItem(item);
+    setSubmitting(false);
+
   };
 
   return (
