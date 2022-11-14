@@ -90,7 +90,13 @@ function TodoListCard() {
 
   React.useEffect(() => {
     async function callingAllCars() {
-      const allCars = await getAllCars();
+      let allCars = await getAllCars();
+      if (allCars.length === 0) {
+        starterCars.forEach(async (car) => {
+          addToDb(car)
+        })
+        allCars = await getAllCars();
+      }
       setItems(allCars);
     }
     callingAllCars();
@@ -329,23 +335,28 @@ async function getAllCars() {
   json = res ? await res.json() : [];
   return json;
 }
-
+// try catch all TODO
 async function addToDb(item) {
-  const res = await fetch('/cars', {
-    method: 'POST',
-    body: JSON.stringify({
-      make: item.make,
-      model: item.model,
-      carPackage: item.carPackage,
-      color: item.color,
-      year: item.year,
-      category: item.category,
-      mileage: item.mileage,
-      price: item.price,
-    }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-  return res;
+  try {
+    const res = await fetch('/cars', {
+      method: 'POST',
+      body: JSON.stringify({
+        make: item.make,
+        model: item.model,
+        carPackage: item.carPackage,
+        color: item.color,
+        year: item.year,
+        category: item.category,
+        mileage: item.mileage,
+        price: item.price,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    return res;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
 }
 
 async function deleteFromDb(item) {
