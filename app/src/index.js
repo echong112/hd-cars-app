@@ -9,10 +9,10 @@ const deleteItem = require('./routes/deleteItem');
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 
-app.get('/items', getItems);
-app.post('/items', addItem);
-app.put('/items/:id', updateItem);
-app.delete('/items/:id', deleteItem);
+app.get('/cars', getItems);
+app.post('/cars', addItem);
+app.put('/cars/:id', updateItem);
+app.delete('/cars/:id', deleteItem);
 
 db.init().then(() => {
     app.listen(3000, () => console.log('Listening on port 3000'));

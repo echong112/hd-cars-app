@@ -18,7 +18,7 @@ function init() {
                 console.log(`Using sqlite database at ${location}`);
 
             db.run(
-                'CREATE TABLE IF NOT EXISTS todo_items (id varchar(36), name varchar(255), completed boolean)',
+                'CREATE TABLE IF NOT EXISTS todo_items (id varchar(36), make varchar(255), model varchar(255),  carPackage varchar(255), color varchar(255), year INT, category varchar(255), mileage INT, price INT)',
                 (err, result) => {
                     if (err) return rej(err);
                     acc();
@@ -41,10 +41,19 @@ async function getItems() {
     return new Promise((acc, rej) => {
         db.all('SELECT * FROM todo_items', (err, rows) => {
             if (err) return rej(err);
+            console.log(rows)
             acc(
                 rows.map(item =>
                     Object.assign({}, item, {
-                        completed: item.completed === 1,
+                        make: item.make,
+                        model: item.model,
+                        carPackage: item.carPackage,
+                        color: item.color,
+                        year: item.year,
+                        category: item.category,
+                        mileage: item.mileage,
+                        price: item.price,
+
                     }),
                 ),
             );
@@ -57,11 +66,14 @@ async function getItem(id) {
         db.all('SELECT * FROM todo_items WHERE id=?', [id], (err, rows) => {
             if (err) return rej(err);
             acc(
+                console.log(rows),
                 rows.map(item =>
                     Object.assign({}, item, {
                         completed: item.completed === 1,
-                    }),
+                    })
                 )[0],
+
+
             );
         });
     });
@@ -70,8 +82,8 @@ async function getItem(id) {
 async function storeItem(item) {
     return new Promise((acc, rej) => {
         db.run(
-            'INSERT INTO todo_items (id, name, completed) VALUES (?, ?, ?)',
-            [item.id, item.name, item.completed ? 1 : 0],
+            'INSERT INTO todo_items (id, make, model, carPackage, color, year, category, mileage, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [item.id, item.make, item.model, item.carPackage, item.color, item.year, item.category, item.mileage, item.price],
             err => {
                 if (err) return rej(err);
                 acc();
