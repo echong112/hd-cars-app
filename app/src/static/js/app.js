@@ -151,7 +151,7 @@ function TodoListCard() {
       <p>Logs</p>
       {logs && logs.map((log) => {
         return (
-          <p>henry</p>
+          <p>{`${log.action} ${log.make} ${log.model}`}</p>
         )
       })}
     </Container>
@@ -375,8 +375,9 @@ async function addToDb(item) {
 }
 
 async function deleteFromDb(item) {
-  await fetch(`/cars/${item.id}`, { method: 'DELETE' });
-  return item
+  await fetch(`/cars/${item.id}`, { method: 'DELETE', body: JSON.stringify({...item}) });
+
+  return item;
 }
 
 async function getAllLogs() {

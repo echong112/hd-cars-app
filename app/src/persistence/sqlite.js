@@ -104,8 +104,6 @@ async function getItem(id) {
             price: item.price,
           })
         )[0],
-
-
       );
     });
   });
@@ -139,6 +137,8 @@ async function updateItem(id, item) {
 }
 
 async function removeItem(id) {
+  const currentItem = await getItem(id);
+  logItem(currentItem, 'Deleting');
   return new Promise((acc, rej) => {
     db.run('DELETE FROM todo_items WHERE id = ?', [id], err => {
       if (err) return rej(err);
