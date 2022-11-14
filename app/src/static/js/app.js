@@ -80,45 +80,12 @@ const starterCars = [
 
 // 2. App container
 function App() {
-  const { Container, Row, Col } = ReactBootstrap;
-  return (
-    <Container>
-      <Row>
-        <Col md={{ offset: 3, span: 6 }}>
-          <TodoListCard />
-        </Col>
-      </Row>
-    </Container>
-  );
-}
-
-async function getAllCars() {
-  let json;
-  const res = await fetch('/cars');
-  json = res ? await res.json() : [];
-  return json;
-}
-
-async function addToDb(item) {
-  const res = await fetch('/cars', {
-    method: 'POST',
-    body: JSON.stringify({
-      make: item.make,
-      model: item.model,
-      carPackage: item.carPackage,
-      color: item.color,
-      year: item.year,
-      category: item.category,
-      mileage: item.mileage,
-      price: item.price,
-    }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-  return res;
+  return <TodoListCard />
 }
 
 // 3. List of Cars
 function TodoListCard() {
+  const { Container, Row, Col } = ReactBootstrap;
   const [items, setItems] = React.useState(null);
 
   React.useEffect(() => {
@@ -147,8 +114,12 @@ function TodoListCard() {
   if (items === null) return 'Loading...';
 
   return (
-    <React.Fragment>
-      <AddItemForm onNewItem={onNewItem} />
+    <Container>
+    <Row>
+      <Col>
+        <AddItemForm onNewItem={onNewItem} />
+      </Col>
+      <Col>
       {items.length === 0 && (
         <p className="text-center">No items yet! Add one above!</p>
       )}
@@ -159,7 +130,9 @@ function TodoListCard() {
           onItemRemoval={onItemRemoval}
         />
       ))}
-    </React.Fragment>
+      </Col>
+    </Row>
+    </Container>
   );
 }
 
@@ -194,7 +167,6 @@ function AddItemForm({ onNewItem }) {
     const item = await res.json();
     onNewItem(item);
     setSubmitting(false);
-
   };
 
   return (
@@ -321,10 +293,9 @@ function AddItemForm({ onNewItem }) {
 function ItemDisplay({ item, onItemRemoval }) {
   const { Container, Row, Col, Button } = ReactBootstrap;
 
-  const removeItem = () => {
-    fetch(`/cars/${item.id}`, { method: 'DELETE' }).then(() =>
-      onItemRemoval(item),
-    );
+  const removeItem = async () => {
+    await fetch(`/cars/${item.id}`, { method: 'DELETE' });
+    onItemRemoval(item);
   };
 
   return (
@@ -348,4 +319,28 @@ function ItemDisplay({ item, onItemRemoval }) {
   );
 }
 
+async function getAllCars() {
+  let json;
+  const res = await fetch('/cars');
+  json = res ? await res.json() : [];
+  return json;
+}
+
+async function addToDb(item) {
+  const res = await fetch('/cars', {
+    method: 'POST',
+    body: JSON.stringify({
+      make: item.make,
+      model: item.model,
+      carPackage: item.carPackage,
+      color: item.color,
+      year: item.year,
+      category: item.category,
+      mileage: item.mileage,
+      price: item.price,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  return res;
+}
 ReactDOM.render(<App />, document.getElementById('root'));
