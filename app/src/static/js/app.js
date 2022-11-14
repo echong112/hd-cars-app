@@ -263,7 +263,7 @@ function AddItemForm({ onNewItem }) {
   );
 }
 
-function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
+function ItemDisplay({ item, onItemRemoval }) {
   const { Container, Row, Col, Button } = ReactBootstrap;
 
   const removeItem = () => {
