@@ -1,5 +1,5 @@
-
-
+// Enums would have been better here
+// 1. Constants 
 const Makes = {
   Ford: 'Ford',
   Toyota: 'Toyota',
@@ -7,7 +7,6 @@ const Makes = {
   Cadillac: 'Cadillac',
   Porsche: 'Porsche',
 };
-// Enums would have been better here
 const Colors = {
   Beige: 'Beige',
   Black: 'Black',
@@ -37,7 +36,7 @@ const Category = {
   Wagon: 'Wagon',
 };
 
-
+// 2. App container
 function App() {
   const { Container, Row, Col } = ReactBootstrap;
   return (
@@ -51,6 +50,7 @@ function App() {
   );
 }
 
+// 3. List of Cars
 function TodoListCard() {
   const [items, setItems] = React.useState(null);
 
@@ -107,6 +107,7 @@ function TodoListCard() {
   );
 }
 
+// 3. Add car form
 function AddItemForm({ onNewItem }) {
   const { Form, Button } = ReactBootstrap;
   const [make, setMake] = React.useState('Ford');
@@ -263,6 +264,7 @@ function AddItemForm({ onNewItem }) {
   );
 }
 
+// 4. Single Car Row
 function ItemDisplay({ item, onItemRemoval }) {
   const { Container, Row, Col, Button } = ReactBootstrap;
 
