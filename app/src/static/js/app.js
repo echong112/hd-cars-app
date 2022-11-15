@@ -324,8 +324,17 @@ function ItemDisplay({ item, onItemRemoval }) {
   return (
     <Container fluid className={`item`}>
       <Row>
-        <Col xs={10} className="name">
-          {item.make} {item.model}
+        <Col xs={10} className="name mr-2">
+          <span className="mr1" style={{
+            background: item.color.toLowerCase(),
+            border: 'black 1px solid',
+            height: 30,
+            width: 30,
+            display: 'inline-block'
+          }}>&nbsp;</span>
+          <span className="mr-1">{`$${item.price / 100}`}</span>
+          
+          {item.make} {item.model} {`(${item.mileage} miles)`}
         </Col>
         <Col xs={1} className="text-center remove">
           <Button
