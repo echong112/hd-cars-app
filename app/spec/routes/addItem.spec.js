@@ -21,7 +21,7 @@ test('it stores item correctly', async () => {
     const price = 3500000;
     const year = 2021;
     const category = 'Sedan';
-    const req = { body: { name } };
+    const req = { body: { id, make, model, carPackage, color, mileage, price, year, category } };
     const res = { send: jest.fn() };
 
     uuid.mockReturnValue(id);
