@@ -4,6 +4,27 @@ I used the boilerplate app available on the docker website as a starting point.
 
 [Containerize an application | Docker Documentation](https://docs.docker.com/get-started/02_our_app/)
 
+## Notes
+
+API routing is available in:
+```/app/src/index.js```
+
+Routing is available in:
+```/app/src/routes```
+
+UI is available in:
+```/app/src/static/js/app.js```
+
+Logging is available within the sqlite functions:
+```/app/src/persistence/sqlite.js```
+
+I was unable to implement unit tests on this boilerplate, but currently work with Jest to test React code.
+
+Thank you and have a nice day. 
+
+Best regards,
+Enrique
+
 # Docker Getting Started Tutorial
 
 This tutorial has been written with the intent of helping folks get up and running
