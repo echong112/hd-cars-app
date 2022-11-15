@@ -166,10 +166,10 @@ function AddItemForm({ onNewItem }) {
   const [model, setModel] = React.useState('');
   const [carPackage, setCarPackage] = React.useState('');
   const [color, setColor] = React.useState('');
-  const [year, setYear] = React.useState(2021);
+  const [year, setYear] = React.useState();
   const [category, setCategory] = React.useState('');
-  const [mileage, setMileage] = React.useState(0);
-  const [price, setPrice] = React.useState(0);
+  const [mileage, setMileage] = React.useState();
+  const [price, setPrice] = React.useState();
   const [submitting, setSubmitting] = React.useState(false);
 
   const submitNewItem = async (e) => {
@@ -204,6 +204,7 @@ function AddItemForm({ onNewItem }) {
           placeholder="Model Item"
           aria-describedby="basic-addon1"
           as="select">
+            <option value="">-</option>
             {Makes && Object.values(Makes).map((make) => {
               return (
                 <option value={make}>{make}</option>
@@ -243,6 +244,7 @@ function AddItemForm({ onNewItem }) {
           placeholder="Model Item"
           aria-describedby="basic-addon1"
           as="select">
+            <option value="">-</option>
             {Colors && Object.values(Colors).map((color) => {
               return (
                 <option value={color}>{color}</option>
@@ -271,6 +273,7 @@ function AddItemForm({ onNewItem }) {
           placeholder="Model Item"
           aria-describedby="basic-addon1"
           as="select">
+            <option value="">-</option>
             {Category && Object.values(Category).map((category) => {
               return (
                 <option value={category}>{category}</option>
