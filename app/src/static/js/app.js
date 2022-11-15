@@ -88,6 +88,7 @@ function TodoListCard() {
   const { Container, Row, Col } = ReactBootstrap;
   const [items, setItems] = React.useState(null);
   const [logs, setLogs] = React.useState([]);
+  const [showLogs, setShowLogs] = React.useState(false);
 
   React.useEffect(() => {
     async function callingAllLogs() {
@@ -130,6 +131,7 @@ function TodoListCard() {
     <Container>
     <Row>
       <Col>
+      <button onClick={() => setShowLogs(!showLogs)}>{`${showLogs ? 'Hide' : 'Show'}`} Logs</button>
       <h2>All Cars</h2>
       {items.length === 0 && (
         <p className="text-center">No items yet! Add one above!</p>
@@ -147,14 +149,28 @@ function TodoListCard() {
         <AddItemForm onNewItem={onNewItem} />
       </Col>
     </Row>
-    <Container>
-      <p>Logs</p>
-      {logs && logs.map((log) => {
-        return (
-          <p>{`${log.timestamp} ${log.action} ${log.make} ${log.model}`}</p>
-        )
-      })}
-    </Container>
+    {showLogs && (
+      <Container style={{
+        position: 'absolute',
+        background: 'white',
+        right: 0,
+        bottom: 0,
+        width: '33%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: 50
+      }}>
+        <p>Logs</p>
+        {logs && logs.map((log) => {
+          return (
+            <p style={{
+              color: log.action === 'Deleting' ? 'red' : 'green'
+            }}>{`${log.timestamp} ${log.action} ${log.make} ${log.model}`}</p>
+          )
+        })}
+      </Container>
+    )}
     </Container>
   );
 }
