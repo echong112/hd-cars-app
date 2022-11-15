@@ -4,8 +4,14 @@ const location = process.env.SQLITE_DB_LOCATION || '/etc/todos/todo.db';
 
 const ITEM = {
     id: '7aef3d7c-d301-4846-8358-2a91ec9d6be3',
-    name: 'Test',
-    completed: false,
+    make: 'Toyota',
+    model: 'Camry',
+    carPackage: 'Base',
+    color: 'White',
+    mileage: 200,
+    price: 3500000,
+    year: 2021,
+    category: 'Sedan'
 };
 
 beforeEach(() => {
@@ -16,6 +22,9 @@ beforeEach(() => {
 
 test('it initializes correctly', async () => {
     await db.init();
+});
+test('it initializes logs correctly', async () => {
+    await db.initLogs();
 });
 
 test('it can store and retrieve items', async () => {
