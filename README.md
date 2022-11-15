@@ -18,6 +18,8 @@ UI is available in:
 Logging is available within the sqlite functions:
 ```/app/src/persistence/sqlite.js```
 
+Unit Tests are available :
+```/app/spec```
 
 Thank you and have a nice day. 
 
