@@ -18,7 +18,6 @@ UI is available in:
 Logging is available within the sqlite functions:
 ```/app/src/persistence/sqlite.js```
 
-I was unable to implement unit tests on this boilerplate, but currently work with Jest to test React code.
 
 Thank you and have a nice day. 
 
