@@ -151,7 +151,7 @@ function TodoListCard() {
       <p>Logs</p>
       {logs && logs.map((log) => {
         return (
-          <p>{`${log.action} ${log.make} ${log.model}`}</p>
+          <p>{`${log.timestamp} ${log.action} ${log.make} ${log.model}`}</p>
         )
       })}
     </Container>

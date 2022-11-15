@@ -2,6 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const location = process.env.SQLITE_DB_LOCATION || '/etc/todos/todo.db';
 const uuid = require('uuid/v4');
+const moment = require('moment');
 
 let db, dbAll, dbRun;
 
@@ -43,7 +44,7 @@ function initLogs() {
         console.log(`Using sqlite database at ${location}`);
 
       db.run(
-        'CREATE TABLE IF NOT EXISTS logs (id varchar(36), action varchar(255), carId varchar(36), make varchar(255), model varchar(255),  carPackage varchar(255), color varchar(255), year INT, category varchar(255), mileage INT, price INT)',
+        'CREATE TABLE IF NOT EXISTS logs (id varchar(36), timestamp varchar(255), action varchar(255), carId varchar(36), make varchar(255), model varchar(255),  carPackage varchar(255), color varchar(255), year INT, category varchar(255), mileage INT, price INT)',
         (err, result) => {
           console.log('hi there', err, result);
           if (err) return rej(err);
@@ -136,8 +137,8 @@ async function removeItem(id) {
 async function logItem(item, action) {
   return new Promise((acc, rej) => {
     db.run(
-      'INSERT INTO logs (id, action, carId, make, model, carPackage, color, year, category, mileage, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [uuid(), action, item.id, item.make, item.model, item.carPackage, item.color, item.year, item.category, item.mileage, item.price],
+      'INSERT INTO logs (id, timestamp, action, carId, make, model, carPackage, color, year, category, mileage, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [uuid(), moment().format('YYYY-MM-DD hh:mm:ss'), action, item.id, item.make, item.model, item.carPackage, item.color, item.year, item.category, item.mileage, item.price],
       err => {
         if (err) return rej(err);
         acc();
@@ -154,6 +155,7 @@ async function getLogs() {
         rows.map(log =>
           Object.assign({}, log, {
             id: log.id,
+            timestamp: log.timestamp,
             action: log.action,
             carId: log.carId,
             make: log.make,
