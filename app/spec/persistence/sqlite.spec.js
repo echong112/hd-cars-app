@@ -29,6 +29,7 @@ test('it initializes logs correctly', async () => {
 
 test('it can store and retrieve items', async () => {
     await db.init();
+    await db.initLogs();
 
     await db.storeItem(ITEM);
 

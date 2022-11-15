@@ -46,7 +46,6 @@ function initLogs() {
       db.run(
         'CREATE TABLE IF NOT EXISTS logs (id varchar(36), timestamp varchar(255), action varchar(255), carId varchar(36), make varchar(255), model varchar(255),  carPackage varchar(255), color varchar(255), year INT, category varchar(255), mileage INT, price INT)',
         (err, result) => {
-          console.log('hi there', err, result);
           if (err) return rej(err);
           acc();
         },
