@@ -1,3 +1,9 @@
+To Whom It May Concern:
+
+I used the boilerplate app available on the docker website as a starting point. 
+
+[https://docs.docker.com/get-started/02_our_app/](Containerize an application | Docker Documentation)
+
 # Docker Getting Started Tutorial
 
 This tutorial has been written with the intent of helping folks get up and running
