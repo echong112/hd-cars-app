@@ -134,7 +134,6 @@ async function removeItem(id) {
 }
 
 async function logItem(item, action) {
-  console.log(item, action);
   return new Promise((acc, rej) => {
     db.run(
       'INSERT INTO logs (id, action, carId, make, model, carPackage, color, year, category, mileage, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
