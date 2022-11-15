@@ -13,7 +13,14 @@ jest.mock('../../src/persistence', () => ({
 
 test('it stores item correctly', async () => {
     const id = 'something-not-a-uuid';
-    const name = 'A sample item';
+    const make = 'Toyota';
+    const model = 'Camry';
+    const carPackage = 'Base';
+    const color = 'White';
+    const mileage = 200;
+    const price = 3500000;
+    const year = 2021;
+    const category = 'Sedan';
     const req = { body: { name } };
     const res = { send: jest.fn() };
 
@@ -21,7 +28,7 @@ test('it stores item correctly', async () => {
 
     await addItem(req, res);
 
-    const expectedItem = { id, name, completed: false };
+    const expectedItem = { id, make, model, carPackage, color, mileage, price, year, category };
 
     expect(db.storeItem.mock.calls.length).toBe(1);
     expect(db.storeItem.mock.calls[0][0]).toEqual(expectedItem);
