@@ -162,14 +162,14 @@ function TodoListCard() {
 // 3. Add car form
 function AddItemForm({ onNewItem }) {
   const { Form, Button } = ReactBootstrap;
-  const [make, setMake] = React.useState('Ford');
-  const [model, setModel] = React.useState('F150');
-  const [carPackage, setCarPackage] = React.useState('Base');
-  const [color, setColor] = React.useState('Beige');
+  const [make, setMake] = React.useState('');
+  const [model, setModel] = React.useState('');
+  const [carPackage, setCarPackage] = React.useState('');
+  const [color, setColor] = React.useState('');
   const [year, setYear] = React.useState(2021);
-  const [category, setCategory] = React.useState('Pickup Truck');
-  const [mileage, setMileage] = React.useState(10000);
-  const [price, setPrice] = React.useState(2000000);
+  const [category, setCategory] = React.useState('');
+  const [mileage, setMileage] = React.useState(0);
+  const [price, setPrice] = React.useState(0);
   const [submitting, setSubmitting] = React.useState(false);
 
   const submitNewItem = async (e) => {
@@ -197,6 +197,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Make">
         <Form.Label>Make</Form.Label>
         <Form.Control
+          required
           value={make}
           onChange={e => setMake(e.target.value)}
           type="text"
@@ -325,14 +326,14 @@ function ItemDisplay({ item, onItemRemoval }) {
     <Container fluid className={`item`}>
       <Row>
         <Col xs={10} className="name mr-2">
-          <span className="mr1" style={{
+          <span className="mr-2" style={{
             background: item.color.toLowerCase(),
             border: 'black 1px solid',
             height: 30,
             width: 30,
             display: 'inline-block'
           }}>&nbsp;</span>
-          <span className="mr-1">{`$${item.price / 100}`}</span>
+          <span className="mr-2">{`$${item.price / 100}`}</span>
           
           {item.make} {item.model} {`(${item.mileage} miles)`}
         </Col>
