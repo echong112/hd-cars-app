@@ -216,6 +216,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Model</Form.Label>
         <Form.Control
+          required
           value={model}
           onChange={e => setModel(e.target.value)}
           type="text"
@@ -227,6 +228,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Package</Form.Label>
         <Form.Control
+          required
           value={carPackage}
           onChange={e => setCarPackage(e.target.value)}
           type="text"
@@ -238,6 +240,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Color</Form.Label>
         <Form.Control
+          required
           value={color}
           onChange={e => setColor(e.target.value)}
           type="text"
@@ -256,6 +259,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Year</Form.Label>
         <Form.Control
+          required
           value={year}
           onChange={e => setYear(e.target.value)}
           type="number"
@@ -267,6 +271,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Category</Form.Label>
         <Form.Control
+          required
           value={category}
           onChange={e => setCategory(e.target.value)}
           type="text"
@@ -285,6 +290,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Mileage</Form.Label>
         <Form.Control
+          required
           value={mileage}
           onChange={e => setMileage(e.target.value)}
           type="number"
@@ -296,6 +302,7 @@ function AddItemForm({ onNewItem }) {
       <Form.Group className="mb-3" controlId="Model">
         <Form.Label>Price in Cents</Form.Label>
         <Form.Control
+          required
           value={price}
           onChange={e => setPrice(e.target.value)}
           type="number"
@@ -307,7 +314,6 @@ function AddItemForm({ onNewItem }) {
         <Button
           type="submit"
           variant="success"
-          // disabled={!newItem.length}
           className={submitting ? 'disabled' : ''}
         >
           {submitting ? 'Adding...' : 'Add Item'}
